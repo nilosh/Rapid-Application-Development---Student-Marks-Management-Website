@@ -1,0 +1,45 @@
+﻿@model WebAssignment.Models.Login
+
+@{
+    ViewBag.Title = "Log-in";
+}
+
+<h2>Login</h2>
+
+
+
+<div id="login_div">
+
+    @using (Html.BeginForm("Login", "Logins", FormMethod.Post))
+    {
+        <center>
+            <table>
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.UserEmail)
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.UserEmail)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.UserPassword)
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.UserPassword)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        <input type="submit" name="" value="Login" />
+                        
+                    </td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+        </center>
+    }
+</div>

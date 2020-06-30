@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Assignment_2_CSI2441Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Assignment_2_CSI2441.dbo.Login' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="UserEmail" />
+            <PropertyRef Name="UserPassword" />
+            <PropertyRef Name="UserType" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="UserEmail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserPassword" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserType" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="StudentName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StudentPhoto" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Unit_Enrolment">
+          <Key>
+            <PropertyRef Name="Enrolment_ID" />
+          </Key>
+          <Property Name="UnitCode" Type="char" MaxLength="7" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Semester" Type="int" Nullable="false" />
+          <Property Name="Assessment_1" Type="int" Nullable="false" />
+          <Property Name="Assessment_2" Type="int" Nullable="false" />
+          <Property Name="Final_Exam" Type="int" Nullable="false" />
+          <Property Name="Enrolment_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentID" Type="char" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Units">
+          <Key>
+            <PropertyRef Name="UnitCode" />
+          </Key>
+          <Property Name="UnitCode" Type="char" MaxLength="7" Nullable="false" />
+          <Property Name="UnitTitle" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UnitCoordinator" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UnitOuttlinePdf" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="FK_Unit_Enrolment_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Unit_Enrolment" Type="Self.Unit_Enrolment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Unit_Enrolment">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Unit_Enrolment_Units">
+          <End Role="Units" Type="Self.Units" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Unit_Enrolment" Type="Self.Unit_Enrolment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="UnitCode" />
+            </Principal>
+            <Dependent Role="Unit_Enrolment">
+              <PropertyRef Name="UnitCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Assignment_2_CSI2441ModelStoreContainer">
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unit_Enrolment" EntityType="Self.Unit_Enrolment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Login" EntityType="Self.Login" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Login].[UserID] AS [UserID], 
+    [Login].[UserEmail] AS [UserEmail], 
+    [Login].[UserPassword] AS [UserPassword], 
+    [Login].[UserType] AS [UserType]
+    FROM [dbo].[Login] AS [Login]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Unit_Enrolment_Student" Association="Self.FK_Unit_Enrolment_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Unit_Enrolment" EntitySet="Unit_Enrolment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Unit_Enrolment_Units" Association="Self.FK_Unit_Enrolment_Units">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="Unit_Enrolment" EntitySet="Unit_Enrolment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Assignment_2_CSI2441Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="StudentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StudentPhoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Unit_Enrolment" Relationship="Assignment_2_CSI2441Model.FK_Unit_Enrolment_Student" FromRole="Student" ToRole="Unit_Enrolment" />
+        </EntityType>
+        <EntityType Name="Unit_Enrolment">
+          <Key>
+            <PropertyRef Name="Enrolment_ID" />
+          </Key>
+          <Property Name="UnitCode" Type="String" MaxLength="7" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Semester" Type="Int32" Nullable="false" />
+          <Property Name="Assessment_1" Type="Int32" Nullable="false" />
+          <Property Name="Assessment_2" Type="Int32" Nullable="false" />
+          <Property Name="Final_Exam" Type="Int32" Nullable="false" />
+          <Property Name="Enrolment_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentID" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Unit" Relationship="Self.FK_Unit_Enrolment_Units" FromRole="Unit_Enrolment" ToRole="Units" />
+          <NavigationProperty Name="Student" Relationship="Assignment_2_CSI2441Model.FK_Unit_Enrolment_Student" FromRole="Unit_Enrolment" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="UnitCode" />
+          </Key>
+          <Property Name="UnitCode" Type="String" MaxLength="7" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="UnitTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UnitCoordinator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UnitOuttlinePdf" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Unit_Enrolment" Relationship="Self.FK_Unit_Enrolment_Units" FromRole="Units" ToRole="Unit_Enrolment" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="UserEmail" />
+            <PropertyRef Name="UserPassword" />
+            <PropertyRef Name="UserType" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="UserEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserType" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Unit_Enrolment_Units">
+          <End Role="Units" Type="Self.Unit" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Unit_Enrolment" Type="Self.Unit_Enrolment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="UnitCode" />
+            </Principal>
+            <Dependent Role="Unit_Enrolment">
+              <PropertyRef Name="UnitCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Assignment_2_CSI2441Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <EntitySet Name="Unit_Enrolment" EntityType="Self.Unit_Enrolment" />
+          <EntitySet Name="Units" EntityType="Self.Unit" />
+          <EntitySet Name="Logins" EntityType="Self.Login" />
+          <AssociationSet Name="FK_Unit_Enrolment_Units" Association="Self.FK_Unit_Enrolment_Units">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="Unit_Enrolment" EntitySet="Unit_Enrolment" />
+          </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="Assignment_2_CSI2441Model.sysdiagram" />
+          <AssociationSet Name="FK_Unit_Enrolment_Student" Association="Assignment_2_CSI2441Model.FK_Unit_Enrolment_Student">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Unit_Enrolment" EntitySet="Unit_Enrolment" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Unit_Enrolment_Student">
+          <End Type="Assignment_2_CSI2441Model.Student" Role="Student" Multiplicity="1" />
+          <End Type="Assignment_2_CSI2441Model.Unit_Enrolment" Role="Unit_Enrolment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="Unit_Enrolment">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Assignment_2_CSI2441ModelStoreContainer" CdmEntityContainer="Assignment_2_CSI2441Entities1">
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="Assignment_2_CSI2441Model.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+                <ScalarProperty Name="StudentPhoto" ColumnName="StudentPhoto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Unit_Enrolment">
+            <EntityTypeMapping TypeName="Assignment_2_CSI2441Model.Unit_Enrolment">
+              <MappingFragment StoreEntitySet="Unit_Enrolment">
+                <ScalarProperty Name="UnitCode" ColumnName="UnitCode" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Semester" ColumnName="Semester" />
+                <ScalarProperty Name="Assessment_1" ColumnName="Assessment_1" />
+                <ScalarProperty Name="Assessment_2" ColumnName="Assessment_2" />
+                <ScalarProperty Name="Final_Exam" ColumnName="Final_Exam" />
+                <ScalarProperty Name="Enrolment_ID" ColumnName="Enrolment_ID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="Assignment_2_CSI2441Model.Unit">
+              <MappingFragment StoreEntitySet="Units">
+                <ScalarProperty Name="UnitCode" ColumnName="UnitCode" />
+                <ScalarProperty Name="UnitTitle" ColumnName="UnitTitle" />
+                <ScalarProperty Name="UnitCoordinator" ColumnName="UnitCoordinator" />
+                <ScalarProperty Name="UnitOuttlinePdf" ColumnName="UnitOuttlinePdf" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="Assignment_2_CSI2441Model.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Assignment_2_CSI2441Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

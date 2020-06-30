@@ -1,0 +1,98 @@
+﻿@model IEnumerable<WebAssignment.Models.Unit_Enrolment>
+
+@{
+    ViewBag.Title = "unitCode";
+}
+
+@{
+    int row = 0;
+    List<int> totals = ViewBag.totals;
+    List<string> grades = ViewBag.grades;
+}
+
+<h2>View Reports</h2>
+
+
+<table class="table" id="example" align="center">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentID)
+            </th>
+           
+            <th>
+                Semester
+            </th>
+          
+            <th>
+                @Html.DisplayNameFor(model => model.Final_Exam)
+            </th>
+            <th>
+                Unit Score
+            </th>
+            <th>
+                Grade
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Semester)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Final_Exam)
+                </td>
+
+                <td>
+                    @totals[row]
+                </td>
+                <td>
+                    @grades[row++]
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script style="align-content:center">
+
+        $(document).ready(function () {
+            // Setup - add a text input to each footer cell
+            $('#example thead tr').clone(true).appendTo('#example thead');
+            $('#example thead tr:eq(1) th').each(function (i) {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+
+                $('input', this).on('keyup change', function () {
+                    if (table.column(i).search() !== this.value) {
+                        table
+                            .column(i)
+                            .search(this.value)
+                            .draw();
+                    }
+                });
+            });
+
+            var table = $('#example').DataTable({
+                0
+                orderCellsTop: true,
+                fixedHeader: true
+            });
+        });
+       
+    </script>
+
+}
+

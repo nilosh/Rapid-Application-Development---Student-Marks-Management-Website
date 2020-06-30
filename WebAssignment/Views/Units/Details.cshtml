@@ -1,0 +1,42 @@
+﻿@model WebAssignment.Models.Unit
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Unit</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitCoordinator)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitCoordinator)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitOuttlinePdf)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitOuttlinePdf)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UnitCode }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

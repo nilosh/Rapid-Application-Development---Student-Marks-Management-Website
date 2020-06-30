@@ -1,0 +1,108 @@
+﻿@model IEnumerable<WebAssignment.Models.Unit_Enrolment>
+
+@{
+    ViewBag.Title = "Search by Unit code";
+}
+
+@{
+    int row = 0;
+    List<int> totals = ViewBag.totals;
+    List<string> grades = ViewBag.grades;
+}
+<h2>View Reports</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.Label("Unit Code", "Search by Unit Code", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.DropDownList("UnitCode", null, htmlAttributes: new { @class = "form-control" })
+
+    <input type="submit" value="Search" class="btn-success">
+}
+
+
+<table  id="tb" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StudentID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.StudentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.StudentPhoto)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Assessment_1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Assessment_2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Final_Exam)
+            </th>
+            <th>
+                Unit Score
+            </th>
+            <th>
+                Grade
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.StudentName)
+                </td>
+                <td>
+                    <img src="@Url.Content(item.Student.StudentPhoto)" width="45" height="45" />
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Assessment_1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Assessment_2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Final_Exam)
+                </td>
+
+                <td>
+                    @totals[row]
+                </td>
+                <td>
+                    @grades[row++]
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<link href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $("#tb").DataTable({
+                "searching": false,
+                "select": true
+            }); 
+            
+            });
+    </script>
+
+}
+
+
+    Average is - @ViewBag.average    @ViewBag.grade
+
